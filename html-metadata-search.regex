@@ -1,0 +1,38 @@
+href="https://www.americanrhetoric.com/speeches/.*.pdf"
+
+"https:\/\/www\.americanrhetoric\.com\/speeches\/.*\.pdf" #php patter match
+
+# ab hier teil ich es in 3 Teile:
+# Bei Teil 1 und zwei ist leider noch viel dreck drum rum, aber den kann man später noch mit dem gleichen ausdrück wieder löschen
+#Teil 1: das Datum
+\#000048\<\/span\>\"\&gt\;\<\/span\>\d\d ... \d\d\d.*
+#Teil 2: Der Titel
+\>4\<\/span\>\"\&gt\;\<\/span\>.*\<span.*
+#Teil 3: der link
+"https:\/\/www\.americanrhetoric\.com\/speeches\/.*\.pdf"
+#Zusammengesetzt:
+\#000048\<\/span\>\"\&gt\;\<\/span\>\d\d ... \d\d\d.*\>4\<\/span\>\"\&gt\;\<\/span\>.*\<span.*"https:\/\/www\.americanrhetoric\.com\/speeches\/.*\.pdf"
+
+#die eigentlich suche dann:
+\#000048\<\/span\>\"\&gt\;\<\/span\>\d\d ... \d\d\d.*\>.*"https:\/\/www\.americanrhetoric\.com\/speeches\/.*\.pdf"
+
+\#000048\<\/span\>\"\&gt\;\<\/span\>\d\d ... \d\d\d.*\>.*$^.*$^.*$^.*$^.*$^.*$^.*$^.*$^.*$^.*$^.*$^"https:\/\/www\.americanrhetoric\.com\/speeches\/.*\.pdf"
+
+
+
+### Regex zum Korpus cleanup in Notepad++
+
+
+# Die erste Seite hat einen Großen Kopf mit viel Metadaten bis hin zu "Authenticity blablabla". Dieser Regex entfernt sie alle
+
+---------------------Page 1---------------------(\r\n.*)*AUTHENTICITY CERTIFIED.*\r\n
+
+# Alle anderen seiten fangen mit dem Seitenkopf an und dann immer 5 oder 6 Zeilen, bis der Text weitergeht.
+# Damit nicht zu viel entfernt wird, und da eine überflüssige Zeile nicht stört entfernt es nur 6.
+# Der vorder Teil löscht außerdem die Fußzeile von davor.
+
+\r\n.*Page.*\r\n---------------------Page \d*---------------------\r\n.*\r\n.*\r\n.*\r\n.*\r\n.*
+
+# Um die letzte Fußzeile auszubauen
+
+\r\n\r\n.*Page \d\d*(\r\n)*
